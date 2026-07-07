@@ -1,5 +1,7 @@
 package com.careerhub.auth.controller;
 
+import com.careerhub.auth.dto.LoginRequest;
+import com.careerhub.auth.dto.LoginResponse;
 import com.careerhub.auth.dto.RegisterRequest;
 import com.careerhub.auth.dto.RegisterResponse;
 import com.careerhub.auth.service.AuthService;
@@ -23,6 +25,19 @@ public class AuthController {
         return new ApiResponse<>(
                 true,
                 "Registration successful",
+                response
+        );
+    }
+
+    @PostMapping("/login")
+    public ApiResponse<LoginResponse> login(
+            @Valid @RequestBody LoginRequest request) {
+
+        LoginResponse response = authService.login(request);
+
+        return new ApiResponse<>(
+                true,
+                "Login successful",
                 response
         );
     }

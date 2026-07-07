@@ -30,11 +30,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Object>> handleException(Exception ex) {
 
+        ex.printStackTrace();   // <-- Print the real error in the console
+
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ApiResponse<>(
                         false,
-                        "Something went wrong",
+                        ex.getMessage(),
                         null
                 ));
     }
