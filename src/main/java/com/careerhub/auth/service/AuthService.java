@@ -1,14 +1,12 @@
 package com.careerhub.auth.service;
 
-import com.careerhub.auth.dto.LoginRequest;
-import com.careerhub.auth.dto.LoginResponse;
-import com.careerhub.auth.dto.RegisterRequest;
-import com.careerhub.auth.dto.RegisterResponse;
+import com.careerhub.auth.dto.*;
 import com.careerhub.auth.entity.User;
 import com.careerhub.auth.repository.UserRepository;
 import com.careerhub.common.exception.ResourceAlreadyExistsException;
 import com.careerhub.security.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -69,6 +67,19 @@ public class AuthService {
         return new LoginResponse(
                 token,
                 "Bearer",
+                user.getEmail()
+        );
+    }
+
+    public UserResponse getCurrentUser(Authentication authentication) {
+
+        User user = userRepository.findByEmail(authentication.getName())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return new UserResponse(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
                 user.getEmail()
         );
     }
