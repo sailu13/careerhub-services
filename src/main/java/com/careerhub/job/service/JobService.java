@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface JobService {
 
-    List<JobResponse> getAllJobs();
+    List<JobResponse> getAllJobs(String search, String location, String employmentType);
+
+    JobResponse getJobById(Long id);
 }
